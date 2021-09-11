@@ -1,0 +1,443 @@
+.body{
+    min-width: 500px;
+}
+h1, h2, h3, h6{
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+h5{
+    text-align: justify;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+.header{
+    background-color: #3d5c5c;
+    height: 100px;
+}
+.carrusel{
+	background-image: url("/static/geonode/img/fondo1.jpg" );
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+   /* overflow: hidden;*/
+    width: 100%;
+     
+}
+.carrusel img{
+    max-width: 100%;
+   /* height: auto;*/
+    /*display: block;*/
+}
+.item{
+    height: 330px;
+}
+.item img{
+    max-width: 100%;
+   /* height: auto;*/
+    display: block;
+}
+.subheader{
+    margin-bottom: 40px;
+}
+.resumen{
+   visibility: hidden;
+}
+.info-resumen{
+    padding-top: 20px;
+    background-color: #0099c3;
+    border-left: solid #19acd4 1px;
+    border-right: solid #0085aa 1px;
+    color: white;
+    text-align: center
+}
+.numero-resumen{
+    font-size: 36px;
+}
+.circulo i{
+    float: left;
+    font-size: 36px;
+    padding: 5px;
+    width: 65px;
+    height: 65px;
+    text-align: center;
+    line-height: 45px;
+    border-radius: 50%;
+    border:2px solid #91daee;
+}
+.info-resumen h4{
+    color:  #b3eeff;
+}
+.info-resumen:hover{
+    background-color: #008cb3;
+}
+.info-resumen:hover .circulo i{
+    transition: background-color 0.7s ease;
+    background-color:#19acd4;
+}
+.buscador{
+    height: 100px;
+    width: 100%;
+    background-color: white;
+    padding: 30px;
+    visibility: hidden;
+}
+.categorias{
+    background-color: #f2f2f2;
+    padding: 10px 20px;
+    visibility: hidden;
+      
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 90%;
+    margin: 15px auto;
+    padding-top: 5px;
+    overflow:hidden;
+    background-color: white;
+    text-align: center;
+	border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    
+}
+.card img{
+    max-width: 100%;
+    height: 150px;
+    display: block;
+    margin: auto;
+}
+.card:hover {
+    -webkit-transform:scale(1.1);
+    transform:scale(1.1);
+   
+}
+img:hover {
+    transition: filter 0.7s ease;
+    filter: opacity(.5);
+}
+.enlace-categoria{
+    width: 100%;
+    background-color:#39ac73;
+    padding: 5px 0px;
+    text-align: center;
+	border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.enlace-categoria i{
+    font-size: 36px;
+    color: white;
+  
+}
+.etiquetas{
+    background-color: white;
+    padding: 10px 20px 70px 20px;
+    visibility: hidden;
+}
+.et{
+    text-align: center;
+    margin-top: 40px;
+}
+.et a{
+    color:#333333;
+}
+.et:hover {
+    transition: transform 0.7s ease;
+    -webkit-transform:scale(1.2);
+    transform:scale(1.2);
+    color: #037696;
+}
+.et:hover a{
+    color: #037696;
+    text-decoration: none;
+    
+}
+.icono-etiqueta{
+    font-size: 48px;
+}
+.texto-categorias, .texto-etiquetas, .texto-mapas, .texto-servicios{
+    padding: 0px  60px 40px 60px;
+    font-size: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center
+}
+.footer{
+   /*visibility: hidden;*/
+    color: white;
+    text-align: center;
+    background-color: #00334d;
+    overflow: hidden;
+    
+}
+.foo{
+    align-content: center;
+    padding: 19px 0px 19px 0px;
+    
+    
+ }
+.icono-footer{
+    font-size: 30px;
+    padding-top: 20px;
+
+}
+.foo a {
+    color: white;
+    text-decoration: none;
+}
+.icono-footer:hover{
+    color: #d9d9d9;
+}
+.foo:hover{
+    background-color: #00111a;
+}
+.foo:hover a{
+    transition: font-size 0.1s ease;
+    font-size: 14px;
+    text-decoration: none;
+    color:#cccccc;
+}
+.idioma{
+	background-color:#00111a; 
+    padding: 27px 0px 27px 0px;
+}
+.version{
+    background-color:#00111a; 
+ 
+    padding: 8px 0px 0px 0px;
+}
+.version p{
+    font-style: italic;
+    font-weight: bold;
+    
+}
+.lenguaje{
+	width: 80%;
+	padding-bottom: 20px;
+}
+
+
+.foob{
+    align-content: center;
+    padding: 0px 0px 15px 0px;
+   
+}
+a.registro{
+    width: 70%;
+    background-color: #ff6600;
+    color:white;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 15px;
+}
+a.registro:hover{
+    
+    background-color: #339933;
+    color:white;
+    
+}
+a.iniciar-s{
+    width: 70%;
+    background-color: #ff6600;
+    color:white;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 15px;
+
+}
+a.iniciar-s:hover{
+    
+    background-color: #339933;
+    color:white;
+    
+}
+.idiomab{
+    
+
+    background-color:#00111a; 
+    padding: 18px 0px 0px 0px;
+}
+.versionb{
+    background-color:#00111a; 
+    padding: 0px 0px 0px 0px;
+}
+.division{
+    padding:5px 0px;
+}
+.linea{
+    border-left: 1px solid white;
+    height: 70px;
+    margin-left:50%;
+    
+}
+.ver{
+    background-color:#00111a; 
+
+}
+.fin{
+    background-color:#00111a; 
+}
+
+.mapas{
+    background-color: #f2f2f2;
+    padding: 10px 20px;
+    visibility: hidden;  
+}
+.mapa{
+    margin-left: 3%;
+}
+.mapas ul{
+    list-style: none;
+}
+.mapas li{
+    padding: 5px 0px 5px 10px;
+}
+.mapas li:hover{
+   background-color: #dbd9d9; 
+   border-radius: 15px;
+  
+}
+.mapas a{
+    text-decoration: none;
+    font-size:20px;
+    color:#527a7a;
+}
+.mapas a:hover{
+    color: #0085aa;
+}
+.servicios{
+    background-color: white;
+    padding: 10px 20px 70px 20px;
+    
+}
+.serv{
+    text-align: center;
+    color:#527a7a;
+    
+}
+.serv h4{
+    padding: 5px 0px 5px 10px;
+   
+}
+.serv a{
+    padding: 5px 0px 5px 10px;
+    text-decoration: none;
+    color:#527a7a;
+    font-size:20px;
+}
+.serv h4:hover{
+    background-color: #dbd9d9; 
+    border-radius: 15px;
+    
+}
+.serv a:hover{
+    color: #0085aa;
+}
+.serv i{
+    font-size: 36px;
+}
+.serv img{
+    max-width: 80%;
+    height: 70px;
+    display: block;
+    margin: auto;
+}
+@media only screen and (min-width: 992px) {
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        width: 70%;
+        margin: 15px auto;
+        padding-top: 5px;
+        overflow:hidden;
+    }
+    .info-resumen{
+        color: white;
+        background-color: #0099c3;
+        border-left: solid #19acd4 1px;
+        border-right: solid #0085aa 1px;
+        border-top: solid #19acd4 1px;
+        border-bottom: solid #0085aa 1px;
+        padding-top: 20px;
+       
+    }
+
+}
+@media only screen and (min-width: 768px) and (max-width : 991px){
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        width: 65%;
+        margin: 15px auto;
+        padding-top: 5px;
+        overflow:hidden
+    }
+    .info-resumen{
+        color: white;
+        background-color: #0099c3;
+        border-left: solid #19acd4 1px;
+        border-right: solid #0085aa 1px;
+        border-top: solid #19acd4 1px;
+        border-bottom: solid #0085aa 1px;
+        padding-top: 20px;
+       
+    }
+	.form-group{
+        width: 80%;
+        padding-left: 22%;
+    }
+
+}
+@media only screen and (max-width : 767px){
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        width: 80%;
+        margin: 15px auto;
+        padding-top: 5px;
+        overflow:hidden
+    }
+    .info-resumen{
+        color: white;
+        background-color: #0099c3;
+        border-top: solid #19acd4 1px;
+        border-bottom: solid #0085aa 1px;
+        padding-top: 20px;
+       
+    }
+    .texto-categorias, .texto-etiquetas, .texto-mapas, .texto-servicios{
+        padding: 0px 30px 20px 30px;
+        font-size: 16px;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        text-align: justify
+    }
+     .icono-footer{
+        font-size: 20px;
+        padding-bottom: 5px;
+    }
+    .foo{
+        padding:10px 0px 0px 0px;
+       
+    }
+    h1{
+        font-size: 30px;
+    }
+    .form-group{
+        width: 80%;
+        padding-left: 22%;
+    }
+	.division{
+        visibility: hidden;
+    }
+.mapas a{
+        text-decoration: none;
+        font-size:16px;
+        color:#527a7a;
+    }
+    .mapas ul{
+        margin-left: -50px;
+        text-align: center
+    }
+  
+  
+    
+}

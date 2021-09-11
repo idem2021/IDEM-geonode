@@ -1,0 +1,483 @@
+{% extends "geonode_base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load base_tags %}
+
+{% block title %} {% trans "Welcome!" %} - {{ block.super }} {% endblock %}
+
+{% block body_class %}home{% endblock %}
+
+{% block middle %}
+  {{ block.super }}
+  {% block hero %}
+  
+	<div class="carrusel">
+    	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+        	<div class="carousel-inner">
+            	<div class="item active">
+                	<!--<img src="{% static "geonode/img/fondo1.jpg" %}" alt="Cartografia">-->
+                   	<div class="carousel-caption">
+                    	<h2>Infraestructura de Datos Espaciales del Meta</h2>
+                        
+                     </div>
+                 </div>
+            </div>
+		</div>
+	</div>
+  {% endblock %}
+
+  {% block mainbody %}
+  {% block bigsearch %}
+  <div class="big-search">
+  	<div class="container">
+  		<h1>{% trans "Buscar información" %}</h1>
+  		<div class="search">
+  			<form id="search" action="{% url "search" %}" >
+  				<span class="fa fa-search fa-2x"></span>
+  				{% if HAYSTACK_SEARCH %}
+  				<input id="search_input" type="text" placeholder="Buscar" class="form-control" name="q">
+  				{% else %}
+  				<input id="search_input" type="text" placeholder="Buscar" class="form-control" name="title__icontains">
+  				{% endif %}
+  			</form>
+  		</div>
+    
+  		<p  data-toggle="tooltip" title="Observa toda la información del Geocatálogo"><a class="btn btn-default btn-lg"  href="{% url "search" %} ">Explorar</a></p>
+  	</div>
+  </div>
+  {% endblock %}
+
+
+{% block showcase %}
+<div class="resumen">
+                <div class="row">
+                {% with facet_type='home' %}
+         {% facets as facets %}
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xm-12 info-resumen ">
+                        <p class="circulo">
+                            <i class='fas fa-map-marked-alt '></i>
+                            <strong class="numero-resumen">{{ facets.map|default:_("No") }} {% blocktrans count counter=facets.map %}{% plural %}{% endblocktrans %}</strong>
+                        </p>
+                    <h4><a href="{% url "maps_browse" %}">Mapas</a></h4>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xm-12 info-resumen ">
+                        <p class="circulo">
+                            <i class='fas fa-layer-group icono-resumen'></i>
+                            <strong class="numero-resumen">{{ facets.layer|default:_("No") }} {% blocktrans count counter=facets.layer %}{% plural %}{% endblocktrans %}</strong>
+                        </p>
+                    <h4><a href="{% url "layer_browse" %}">Capas</a></h4>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xm-12 info-resumen ">
+                        <p class="circulo">
+                            <i class='fas fa-users icono-resumen'></i>
+                            <strong class="numero-resumen">{{ facets.user|default:_("No") }} {% blocktrans count counter=facets.user %}{% plural %}{% endblocktrans %}</strong>
+                        </p>
+                    <h4><a href="{% url "profile_browse" %}">Usuarios</a></h4>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xm-12 info-resumen ">
+                        <p class="circulo">
+                            <i class='fas fa-file-alt icono-resumen'></i>
+                            <strong class="numero-resumen">{{ facets.document|default:_("No") }} {% blocktrans count counter=facets.document %}{% plural %}{% endblocktrans %}</strong>
+                        </p>
+                    <h4><a href="{% url "document_browse" %}">Documentos</a></h4>
+                    </div>
+                </div>
+ {% endwith %}
+            </div>
+<!--
+  <section id="showcase">
+    <div class="row">
+      <div class="container text-center">
+        <h2>Featured Datasets</h2>
+        <div class="row home-facets">
+        {% with facet_type='home' %}
+         {% facets as facets %}
+          <div class="col-md-6">
+            <p><a href="{% url "layer_browse" %}"><i class="fa fa-square-o fa-4x rotate-45"></i></a></p>
+            <h2><a href="{% url "layer_browse" %}">{{ facets.layer|default:_("No") }} {% blocktrans count counter=facets.layer %}Layer{% plural %}Layers{% endblocktrans %}</a></h2>
+            <p>{% trans "Click to search for geospatial data published by other users, organizations and public sources. Download data in standard formats." %}</p>
+            {% if user.is_authenticated %}
+            <p class="text-center"><a class="btn btn-default" href="{% url "layer_upload" %}" role="button">{% trans "Add layers" %} &raquo;</a></p>
+            {% else %}
+            <p class="text-center"><a class="btn btn-default" href="{% url "layer_browse" %}" role="button">{% trans "Explore layers" %} &raquo;</a></p>
+            {% endif %}
+          </div>
+          <div class="col-md-6">
+            <p><a href="{% url "maps_browse" %}"><i class="fa fa-map-marker fa-4x"></i></a></p>
+            <h2><a href="{% url "maps_browse" %}">{{ facets.map|default:_("No") }} {% blocktrans count counter=facets.map %}Map{% plural %}Maps{% endblocktrans %}</a></h2>
+            <p>{% trans "Data is available for browsing, aggregating and styling to generate maps which can be saved, downloaded, shared publicly or restricted to specify users only." %}</p>
+            {% if user.is_authenticated %}
+            <p><a class="btn btn-default" href="{% url "new_map" %}" role="button">{% trans "Create maps" %} &raquo;</a></p>
+            {% else %}
+            <p><a class="btn btn-default" href="{% url "maps_browse" %}" role="button">{% trans "Explore maps" %} &raquo;</a></p>
+            {% endif %}
+          </div>
+          <div class="col-md-6">
+            <p><a href="{% url "document_browse" %}"><i class="fa fa-newspaper-o fa-4x"></i></a></p>
+            <h2><a href="{% url "document_browse" %}">{{ facets.document|default:_("No") }} {% blocktrans count counter=facets.document %}Document{% plural %}Documents{% endblocktrans %}</a></h2>
+            <p>{% trans "As for the layers and maps GeoNode allows to publish tabular and text data, manage theirs metadata and associated documents." %}</p>
+            {% if user.is_authenticated %}
+            <p class="text-center"><a class="btn btn-default" href="{% url "document_browse" %}" role="button">{% trans "Add documents" %} &raquo;</a></p>
+            {% else %}
+            <p class="text-center"><a class="btn btn-default" href="{% url "document_browse" %}" role="button">{% trans "Explore documents" %} &raquo;</a></p>
+            {% endif %}
+          </div>
+          <div class="col-md-6">
+            <p><a href="{% url "profile_browse" %}"><i class="fa fa-user fa-4x"></i></a></p>
+            <h2><a href="{% url "profile_browse" %}">{{ facets.user|default:_("No") }} {% blocktrans count counter=facets.user %}User{% plural %}Users{% endblocktrans %}</a></h2>
+            <p>{% trans "Geonode allows registered users to easily upload geospatial data and various documents in several formats." %}</p>
+            <p><a class="btn btn-default" href="{% url "profile_browse" %}" role="button">{% trans "See users" %} &raquo;</a></p>
+          </div>
+        {% endwith %}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="container text-center">
+            {% verbatim %}
+            <div ng-app="featured">
+              <div ng-repeat="item in featured | limitTo:4">
+                <div class="col-md-3">
+                  <a href="{{ item.detail_url }}"><img ng-src="{{ item.thumbnail_url }}" /></a>
+                  <h4>{{ item.title | limitTo: 20 }}{{item.title.length > 20 ? '...' : ''}}</h4>
+                </div>
+              </div>
+            </div>
+      		{% endverbatim %}
+            <p><a href="/search/">Explore all datasets</a></p>
+        </div>
+    </div>
+  </section>-->
+  {% endblock %}
+
+
+  {% block datasets %}
+
+ <div class="categorias" id="categorias">
+                <div class="subheader">
+                     <h1><strong>Categorías <i class="fas fa-sitemap" style="color:#85adad;"></i></strong></h1>
+                </div>
+                <div class="row">
+                    <div class="texto-categorias">
+                        Selecciona tu tema de interés y encuéntralo en esta sección.
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="card">
+                            <img src="{% static "geonode/img/fotolia_12980249_xs-agricultura-sostenible.png" %}" alt="Areas">
+                            <h4><strong>Áreas y Ecosistemas</strong></h4>       
+                            <div class="enlace-categoria">
+                                <a href="{% url "search" %}?limit=100&offset=0&group=36"><i class='fa fa-plus-circle'></i></a>
+                            </div>
+                        </div>   
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="card">
+                            <img src="{% static "geonode/img/carto.png" %}" alt="Cartografia">
+                            <h4><strong>Cartografía Base </strong></h4>
+                            <div class="enlace-categoria">
+                                <a href="{% url "search" %}?limit=100&offset=0&group=37"><i class='fa fa-plus-circle'></i></a>
+                            </div>
+                        </div>   
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="card">
+                            <img src="{% static "geonode/img/catastrodigitalperu.png" %}" alt="Catastro">
+                            <h4><strong> Catastro </strong></h4> 
+                            <div class="enlace-categoria">
+                                <a href="{% url "search" %}?limit=100&offset=0&group=38"><i class='fa fa-plus-circle'></i></a>
+                            </div>
+                        </div>   
+                    </div>
+                
+                    <!-- 
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                        <div class="card">
+                            <img src="tumblr_o9c9rnrzny1qbmm1co1_500.gif" alt="Avatar">
+                            <h4><strong>VacÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­o</strong></h4>    
+                            <div class="enlace-categoria">
+                                <a href=""><i class='fas fa-plus-circle'></i></a>
+                            </div>
+                        </div>     
+                    </div> -->
+                </div>
+            </div>
+
+ 			<div class="etiquetas" id="etiquetas">
+                <div class="subheader">
+                  <h1><strong>Etiquetas <i class="fas fa-tags" style="color:#85adad;"></i></strong></h1>
+                </div>
+                <div class="row">
+                    <div class=" texto-etiquetas">
+                       
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 et" >
+                       <i class='fas fa-seedling icono-etiqueta'></i>
+                        <hr>
+                        <a href="{% url "search" %}?limit=100&offset=0&category__identifier__in=Cobertura vegetal" data-toggle="tooltip" title="Cobertura Vegetal">
+                            <h4>Cobertura Vegetal</h4>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 et">
+                         <i class='far fa-building icono-etiqueta'></i>
+                        <hr>
+                        <a href="{% url "search" %}?limit=100&offset=0&category__identifier__in=Edificacion Obra Civil" data-toggle="tooltip" title="Edificación Obra Civil">
+                            <h4>Edificación Obra Civil</h4>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 et">
+                        <i class='fas fa-university icono-etiqueta'></i>
+                        <hr>
+                        <a href="{% url "search" %}?limit=100&offset=0&category__identifier__in=Entidades Territoriales y Unidades Administrativas" data-toggle="tooltip" title="Entidades Territoriales y Unidades Administrativas">
+                            <h4>Entidades Terr.</h4>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 et">
+                        <i class='fas fa-mountain icono-etiqueta'></i>
+                        <hr>
+                        <a href="{% url "search" %}?limit=100&offset=0&category__identifier__in=Relieve" data-toggle="tooltip" title="Relieve">
+                            <h4>Relieve</h4>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 et">
+                        <i class='fas fas fa-cloud-sun icono-etiqueta'></i>
+                        <hr>
+                        <a href="{% url "search" %}?limit=100&offset=0&category__identifier__in=Rural" data-toggle="tooltip" title="Rural">
+                            <h4>Rural</h4>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 et">
+                        <i class='fas fa-lock icono-etiqueta'></i>
+                        <hr>
+                        <a href="{% url "search" %}?limit=100&offset=0&category__identifier__in=SINAP - Sistema Nacional de Áreas Protegidas" data-toggle="tooltip" title="Sistema Nacional de Áreas Protegidas">
+                            <h4>SINAP</h4>
+                        </a>
+                    </div>                 
+                </div>
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 et">
+                       <i class='fas fa-water icono-etiqueta'></i>
+                        <hr>
+                        <a href="{% url "search" %}?limit=100&offset=0&category__identifier__in=Superficies Agua" data-toggle="tooltip" title="Superficies Agua">
+                            <h4>Superficies Agua</h4>
+                        </a>
+                    </div>
+                  
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 et">
+                       <i class='fas fa-plane icono-etiqueta'></i>
+                        <hr>
+                        <a href="{% url "search" %}?limit=100&offset=0&category__identifier__in=Transporte Aereo" data-toggle="tooltip" title="Transporte Aéreo">
+                            <h4>Transporte Aéreo</h4>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 et">
+                        <i class='fas fa-car-alt icono-etiqueta'></i>
+                        <hr>
+                        <a href="{% url "search" %}?limit=100&offset=0&category__identifier__in=Transporte Terrestre" data-toggle="tooltip" title="Transporte Terrestre">
+                            <h4>Transporte Terrestre</h4>
+                        </a>
+                    </div>
+                
+                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 et">
+                         <i class='fas fa-map-marked-alt icono-etiqueta'></i>
+                        <hr>
+                        <a href="{% url "search" %}?limit=100&offset=0&category__identifier__in=Toponimos" data-toggle="tooltip" title="Toponimos">
+                            <h4>Toponimos</h4>
+                        </a>
+                    </div>
+                
+                </div>                       
+            </div>
+ 			<div class="mapas" id="mapas">
+                <div class="subheader">
+                    <h1><strong>Mapas <i class="fas fa-map-marked-alt" style="color:#85adad;"></i></strong></h1>
+                </div>
+                <div class="row map">
+                    <div class=" texto-mapas">
+                       
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <ul>
+                            <li><h4><a href="/maps/195/view" target="_blank" data-toggle="tooltip" title="Mapa General">General</a></h4></li>
+                            <li><h4><a href="/maps/101/view" target="_blank" data-toggle="tooltip" title="Mapa de Acacías">Acacías</a></h4></li>
+                            <li><h4><a href="/maps/191/view" target="_blank" data-toggle="tooltip" title="Mapa de Barranca de Upía">Barranca de Upía</a></h4></li>
+                            <li><h4><a href="/maps/107/view" target="_blank" data-toggle="tooltip" title="Mapa de Cabuyaro">Cabuyaro</a></h4></li>
+                            <li><h4><a href="/maps/110/view" target="_blank" data-toggle="tooltip" title="Mapa de Castilla la Nueva">Castilla la Nueva</a></h4></li>
+                            <li><h4><a href="/maps/113/view" target="_blank" data-toggle="tooltip" title="Mapa de Cubarral">Cubarral</a></h4></li>
+                            <li><h4><a href="/maps/193/view" target="_blank" data-toggle="tooltip" title="Mapa de Cumaral">Cumaral</a></h4></li>
+                            <li><h4><a href="/maps/119/view" target="_blank" data-toggle="tooltip" title="Mapa de El Calvario">El Calvario</a></h4></li>
+                        </ul>
+                    </div> 
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <ul>
+                            <li><h4><a href="/maps/194/view" target="_blank" data-toggle="tooltip" title="Mapa de El Castilla">El Castillo</a></h4></li>
+                            <li><h4><a href="/maps/125/view" target="_blank" data-toggle="tooltip" title="Mapa de El Dorado">El Dorado</a></h4></li>
+                            <li><h4><a href="/maps/128/view" target="_blank" data-toggle="tooltip" title="Mapa de Fuente de Oro">Fuente de Oro</a></h4></li>
+                            <li><h4><a href="/maps/131/view" target="_blank" data-toggle="tooltip" title="Mapa de Granada">Granada</a></h4></li>
+                            <li><h4><a href="/maps/134/view" target="_blank" data-toggle="tooltip" title="Mapa de Guamal">Guamal</a></h4></li>
+                            <li><h4><a href="/maps/136/view" target="_blank" data-toggle="tooltip" title="Mapa de La Macarena">La Macarena</a></h4></li>
+                            <li><h4><a href="/maps/139/view" target="_blank" data-toggle="tooltip" title="Mapa de Lejanías">Lejanías</a></h4></li>
+                            <li><h4><a href="/maps/142/view" target="_blank" data-toggle="tooltip" title="Mapa de Mapiripán">Mapiripán</a></h4></li>
+                        </ul>
+                    </div> 
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <ul>
+                            <li><h4><a href="/maps/176/view" target="_blank" data-toggle="tooltip" title="Mapa de Mesetas">Mesetas</a></h4></li>
+                            <li><h4><a href="/maps/177/view" target="_blank" data-toggle="tooltip" title="Mapa de Puerto Concordia">Puerto Concordia</a></h4></li>
+                            <li><h4><a href="/maps/178/view" target="_blank" data-toggle="tooltip" title="Mapa de Puerto Gaitán">Puerto Gaitán</a></h4></li>
+                            <li><h4><a href="/maps/179/view" target="_blank" data-toggle="tooltip" title="Pama de Puerto Lleras">Puerto Lleras</a></h4></li>
+                            <li><h4><a href="/maps/180/view" target="_blank" data-toggle="tooltip" title="Mapa de Puerto López">Puerto López</a></h4></li>
+                            <li><h4><a href="/maps/181/view" target="_blank" data-toggle="tooltip" title="Mapa de Puerto Rico">Puerto Rico</a></h4></li>
+                            <li><h4><a href="/maps/182/view" target="_blank" data-toggle="tooltip" title="Mapa de Restrepo">Restrepo</a></h4></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <ul>
+                            <li><h4><a href="/maps/183/view" target="_blank" data-toggle="tooltip" title="Mapa de San Carlos de Guaroa">San Carlos de Guaroa</a></h4></li>
+                            <li><h4><a href="/maps/184/view" target="_blank" data-toggle="tooltip" title="Mapa de San Juan de Arama">San Juan de Arama</a></h4></li>
+                            <li><h4><a href="/maps/185/view" target="_blank" data-toggle="tooltip" title="Mapa de San Juanito">San Juanito</a></h4></li>
+                            <li><h4><a href="/maps/186/view" target="_blank" data-toggle="tooltip" title="Mapa de San Martín">San Martín</a></h4></li>
+                            <li><h4><a href="/maps/187/view" target="_blank" data-toggle="tooltip" title="Mapa de Uribe">Uribe</a></h4></li>
+                            <li><h4><a href="/maps/188/view" target="_blank" data-toggle="tooltip" title="Mapa de Villavicencio">Villavicencio</a></h4></li>
+                            <li><h4><a href="/maps/189/view" target="_blank" data-toggle="tooltip" title="Mapa de Vista Hermosa">Vista Hermosa</a></h4></li>
+                        </ul>
+                    </div>
+                                      
+                </div>
+            </div>
+			<div class="servicios">
+                <div class="subheader">
+                    <h1><strong>Servicios web <i class="fas fa-globe-americas" style="color:#85adad;"></i></strong></h1>
+                </div>
+                <div class="row">
+                    <div class=" texto-servicios">
+                        Consume servicios web bajo el estándar Web Map Service o Web Future Service.
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 serv ">
+                     	<img src="{% static "geonode/img/wms.png" %}" alt="wms">
+                        <h4><a href="https://node.bestlagis.com/geoserver/ows?service=wms&version=1.3.0&request=GetCapabilities" target="_blank" data-toggle="tooltip" title="Web Map Service">Web Map Service (WMS)</a></h4>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12  serv">
+                            <img src="{% static "geonode/img/wfs.png" %}" alt="wfs">
+                            <h4><a href="https://node.bestlagis.com/geoserver/ows?service=wfs&version=2.0.0&request=GetCapabilities"  target="_blank" data-toggle="tooltip" title="Web Future Service">Web Future Service (WFS)</a></h4>
+                    </div>
+                </div>
+            </div>
+ 							
+
+  {% endblock %}
+
+  
+
+  {% endblock %}
+
+{% endblock %}
+
+{% block extra_script %}
+{{ block.super }}
+{% if DEBUG_STATIC %}
+<script src="{{ STATIC_URL }}lib/js/angular.js"></script>
+{% endif %}
+<script type="text/javascript">
+    FEATURED_URL = '{% url 'api_dispatch_list' api_name='api' resource_name='featured' %}'
+    'use strict';
+    (function(){
+      var module = angular.module('featured', []);
+      module.run(function($http, $rootScope){
+        $http.get(FEATURED_URL).success(function(data){
+          $rootScope.featured = data.objects;
+        });
+      });
+    })();
+
+          
+            $(window).scroll(function() {
+                $('.resumen').each(function(){
+                    var imagePos = $(this).offset().top;
+                    var topOfWindow = $(window).scrollTop();
+                    if (imagePos < topOfWindow+1000) {
+                        $(this).removeClass("slide");
+                        $(this).addClass("fadeIn");
+                    }
+                    /*if (imagePos < topOfWindow-200) {
+                        $(this).removeClass("fadeIn");
+                        $(this).addClass("slide");
+                    }*/
+                });
+                $('.buscador').each(function(){
+                    var imagePos1 = $(this).offset().top;
+                    var topOfWindow1 = $(window).scrollTop();
+                    if (imagePos1 < topOfWindow1+400) {
+                        $(this).removeClass("s");
+                        $(this).addClass("slideUp");
+                    }
+                    /*if (imagePos1 < topOfWindow1-400) {
+                        $(this).removeClass("slideRight");
+                        $(this).addClass("s");
+                    }*/
+                });
+              
+                $('.categorias').each(function(){
+                    var imagePos2 = $(this).offset().top;
+                    var topOfWindow2 = $(window).scrollTop();
+                    if (imagePos2 < topOfWindow2+300) {
+                        $(this).removeClass("s");
+                        $(this).addClass("slideUp");
+                    }
+                    /*if (imagePos1 < topOfWindow1-400) {
+                        $(this).removeClass("slideRight");
+                        $(this).addClass("s");
+                    }*/
+                });
+
+                $('.etiquetas').each(function(){
+                    var imagePos3 = $(this).offset().top;
+                    var topOfWindow3 = $(window).scrollTop();
+                    if (imagePos3 < topOfWindow3+500) {
+                        $(this).removeClass("slide");
+                        $(this).addClass("slideUp");
+                    }
+                    /*if (imagePos1 < topOfWindow1-100) {
+                        $(this).removeClass("slideRight");
+                        $(this).addClass("slide");
+                    }*/
+                });
+             $('.mapas').each(function(){
+                    var imagePos4 = $(this).offset().top;
+                    var topOfWindow4 = $(window).scrollTop();
+                    if (imagePos4 < topOfWindow4+500) {
+                        $(this).removeClass("slide");
+                        $(this).addClass("slideUp");
+                    }
+                    /*if (imagePos1 < topOfWindow1-100) {
+                        $(this).removeClass("slideRight");
+                        $(this).addClass("slide");
+                    }*/
+                });
+
+               /* $('.footer').each(function(){
+                    var imagePos4 = $(this).offset().top;
+                    var topOfWindow4 = $(window).scrollTop();
+                    if (imagePos4 < topOfWindow4+900) {
+                        $(this).removeClass("slide");
+                        $(this).addClass("slideUp");
+                    }
+                    /*if (imagePos1 < topOfWindow1-100) {
+                        $(this).removeClass("slideRight");
+                        $(this).addClass("slide");
+                    }
+                });*/
+            })
+                 
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();     
+            });
+
+              
+     
+
+</script>
+<script>
+	$('[data-toggle="tooltip"]').tooltip();
+</script>
+{% endblock extra_script %}
